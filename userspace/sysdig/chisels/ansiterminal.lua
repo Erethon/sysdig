@@ -55,11 +55,19 @@ local colors = {
 }
 
 local function makecolor(name, value)
-	ansiterminal[name] = schar(27) .. '[' .. tostring(value) .. 'm'
+        ansiterminal[name] = schar(27) .. '[' .. tostring(value) .. 'm'
 end
 
-for c, v in pairs(colors) do
-    makecolor(c, v)
+function ansiterminal.init(disabled)
+    if not disabled == true then
+        for c, v in pairs(colors) do
+            makecolor(c, v)
+        end
+    else
+        for name, v in pairs(colors) do
+            ansiterminal[name] = ""
+        end
+    end
 end
 
 function ansiterminal.clearscreen()
